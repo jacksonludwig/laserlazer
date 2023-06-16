@@ -22,7 +22,7 @@ signal status_change(new_status: StatusType)
 @export var speed = 1
 @export_category("")
 
-@export_category("Status options")
+@export_category("Status Options")
 @export var state: StatusType = StatusType.INACTIVE
 @export_category("")
 
