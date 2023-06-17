@@ -42,10 +42,12 @@ func get_modified_speed() -> float:
 	if Utils.check_bit_flag(movement_state_modifier, MovementModifier.FROZEN):
 		return 0
 
+	var modifed_speed := speed
+
 	if Utils.check_bit_flag(movement_state_modifier, MovementModifier.FAST):
-		return speed * fast_speed_multiplier
+		modified_speed = modified_speed * fast_speed_multiplier
 
 	if Utils.check_bit_flag(movement_state_modifier, MovementModifier.REVERSED):
-		return speed * -1
+		modified_speed = modified_speed * -1
 
-	return speed
+	return modifed_speed
