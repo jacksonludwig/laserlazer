@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bhvmnn7jhc4p6"]
+
+[ext_resource type="Script" path="res://src/obstacles/wall/vertex.gd" id="1_jiosk"]
+
+[node name="Vertex" type="Node2D"]
+script = ExtResource("1_jiosk")

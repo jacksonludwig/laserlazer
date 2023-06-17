@@ -2,10 +2,7 @@ class_name Vertex
 extends Node2D
 ## Node controlling the positioning and movement of one or more edges.
 
-enum StatusType {
-	INACTIVE,
-	ACTIVE
-}
+enum StatusType { INACTIVE, ACTIVE }
 
 ## Modifiers with lower values will take precedence in some cases
 ## (e.g. if frozen and sped up, it will remain just frozen)
@@ -21,7 +18,7 @@ signal status_change(new_status: StatusType)
 
 @export_category("Movement Options")
 @export_flags("Frozen", "Reverse", "Rotate", "Fast") var movement_state_modifier: int = 0
-@export var speed_modifer: int = 1
+@export var fast_speed_multiplier: int = 2
 @export var speed: int = 1
 @export_category("")
 
@@ -38,18 +35,18 @@ func _process(_delta):
 	## movement is controlled through the defined path
 	if get_parent().get_class() == "WallFollowPath":
 		pass
-	
+
 	## movement controlled through code
 	pass
 
 
 ## get the vertex's speed after modifiers have been applied
-func _get_modified_speed():
+func get_modified_speed() -> float:
 	if Utils.check_bit_flag(movement_state_modifier, MovementModifier.FROZEN):
-		pass
-	
+		return 0
+
 	if Utils.check_bit_flag(movement_state_modifier, MovementModifier.FAST):
-		pass
-		
+		return speed * fast_speed_multiplier
+
 	if Utils.check_bit_flag(movement_state_modifier, MovementModifier.REVERSED):
-		pass
+		return speed * -1

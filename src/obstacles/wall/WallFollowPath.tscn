@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dkf2jbs5ct6ds"]
 
-[ext_resource type="Script" path="res://obstacles/wall/wall_follow_path.gd" id="1_llsuo"]
+[ext_resource type="Script" path="res://src/obstacles/wall/wall_follow_path.gd" id="1_llsuo"]
 
 [sub_resource type="Curve2D" id="Curve2D_6n7bi"]
 

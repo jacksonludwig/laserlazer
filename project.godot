@@ -16,8 +16,8 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-EventBus="*res://autoload/event_bus.gd"
-Utils="*res://autoload/utils.gd"
+EventBus="*res://src/autoload/event_bus.gd"
+Utils="*res://src/autoload/utils.gd"
 
 [rendering]
 
