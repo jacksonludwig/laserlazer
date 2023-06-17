@@ -6,8 +6,9 @@ extends Area2D
 
 
 func _ready():
-	assert(get_parent() is Vertex, "expected parent of edge to always be vertex")
-	get_parent().connect("status_change", _on_active_status_changed)
+	var vertex := get_parent()
+	assert(vertex is Vertex, "expected parent of edge to always be vertex")
+	vertex.connect("status_change", _on_active_status_changed)
 
 
 func _on_active_status_changed(new_status: Enums.StatusType):

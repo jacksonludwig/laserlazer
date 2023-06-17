@@ -4,8 +4,8 @@
 
 [sub_resource type="Curve2D" id="Curve2D_6n7bi"]
 
-[node name="Path2d" type="Path2D"]
+[node name="WallFollowPath" type="Path2D"]
 curve = SubResource("Curve2D_6n7bi")
 
-[node name="WallFollowPath" type="PathFollow2D" parent="."]
+[node name="Path" type="PathFollow2D" parent="."]
 script = ExtResource("1_llsuo")
