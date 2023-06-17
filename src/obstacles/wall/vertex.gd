@@ -16,8 +16,8 @@ signal status_change(new_status: Enums.StatusType)
 
 @export_category("Movement Options")
 @export_flags("Frozen", "Reverse", "Rotate", "Fast") var movement_state_modifier: int = 0
-@export var fast_speed_multiplier: int = 2
-@export var speed: int = 1
+@export var fast_speed_multiplier: float = 2
+@export var speed: float = 1
 @export_category("")
 
 @export_category("Status Options")
@@ -42,7 +42,7 @@ func get_modified_speed() -> float:
 	if Utils.check_bit_flag(movement_state_modifier, MovementModifier.FROZEN):
 		return 0
 
-	var modifed_speed := speed
+	var modified_speed := speed
 
 	if Utils.check_bit_flag(movement_state_modifier, MovementModifier.FAST):
 		modified_speed = modified_speed * fast_speed_multiplier
@@ -50,4 +50,4 @@ func get_modified_speed() -> float:
 	if Utils.check_bit_flag(movement_state_modifier, MovementModifier.REVERSED):
 		modified_speed = modified_speed * -1
 
-	return modifed_speed
+	return modified_speed
