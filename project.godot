@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 
 EventBus="*res://src/autoload/event_bus.gd"
 Utils="*res://src/autoload/utils.gd"
+Enums="*res://src/autoload/enums.gd"
 
 [rendering]
 

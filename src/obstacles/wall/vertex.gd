@@ -2,8 +2,6 @@ class_name Vertex
 extends Node2D
 ## Node controlling the positioning and movement of one or more edges.
 
-enum StatusType { INACTIVE, ACTIVE }
-
 ## Modifiers with lower values will take precedence in some cases
 ## (e.g. if frozen and sped up, it will remain just frozen)
 enum MovementModifier {
@@ -14,7 +12,7 @@ enum MovementModifier {
 }
 
 ## emitted when the wall state changes (e.g. the wall becomes ACTIVE)
-signal status_change(new_status: StatusType)
+signal status_change(new_status: Enums.StatusType)
 
 @export_category("Movement Options")
 @export_flags("Frozen", "Reverse", "Rotate", "Fast") var movement_state_modifier: int = 0
@@ -23,17 +21,16 @@ signal status_change(new_status: StatusType)
 @export_category("")
 
 @export_category("Status Options")
-@export var state: StatusType = StatusType.INACTIVE
+@export var state: Enums.StatusType = Enums.StatusType.INACTIVE:
+	set(new_status):
+		status_change.emit(new_status)
+		state = new_status
 @export_category("")
-
-
-func _ready():
-	pass
 
 
 func _process(_delta):
 	## movement is controlled through the defined path
-	if get_parent().get_class() == "WallFollowPath":
+	if get_parent() is WallFollowPath:
 		pass
 
 	## movement controlled through code
@@ -50,3 +47,5 @@ func get_modified_speed() -> float:
 
 	if Utils.check_bit_flag(movement_state_modifier, MovementModifier.REVERSED):
 		return speed * -1
+
+	return speed

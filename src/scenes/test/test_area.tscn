@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://cd15muds850wn"]
+
+[ext_resource type="Script" path="res://src/obstacles/wall/vertex.gd" id="1_e6csd"]
+[ext_resource type="Script" path="res://src/obstacles/wall/edge.gd" id="2_gu8fv"]
+
+[node name="test_area" type="Node2D"]
+
+[node name="Vertex" type="Node2D" parent="."]
+script = ExtResource("1_e6csd")
+state = 1
+
+[node name="Edge" type="Area2D" parent="Vertex"]
+script = ExtResource("2_gu8fv")
+
+[node name="Vertex2" type="Node2D" parent="."]
+script = ExtResource("1_e6csd")
+
+[node name="Edge" type="Area2D" parent="Vertex2"]
+script = ExtResource("2_gu8fv")
