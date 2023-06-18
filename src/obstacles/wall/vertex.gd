@@ -4,14 +4,7 @@ extends Node2D
 
 ## Modifiers with lower values will take precedence in some cases
 ## (e.g. if frozen and sped up, it will remain just frozen)
-enum MovementModifier {
-	NONE = 0,
-	FROZEN = 1,
-	REVERSED = 2,
-	ROTATE = 4,
-	FAST = 8,
-	SLOW = 16
-}
+enum MovementModifier { NONE = 0, FROZEN = 1, REVERSED = 2, ROTATE = 4, FAST = 8, SLOW = 16 }
 
 ## emitted when the wall state changes (e.g. the wall becomes ACTIVE)
 signal status_change(new_status: Enums.StatusType)
@@ -58,7 +51,7 @@ func get_modified_speed() -> Array[float]:
 	if Utils.check_bit_flag(movement_state_modifier, MovementModifier.FAST):
 		modified_speed = modified_speed * fast_speed_multiplier
 		modified_rotate = modified_rotate * fast_speed_multiplier
-		
+
 	if Utils.check_bit_flag(movement_state_modifier, MovementModifier.SLOW):
 		modified_speed = modified_speed / fast_speed_multiplier
 		modified_rotate = modified_rotate / fast_speed_multiplier
