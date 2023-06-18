@@ -33,7 +33,7 @@ signal status_change(new_status: Enums.StatusType)
 func _process(delta):
 	var speeds := get_modified_speed()
 	rotate(deg_to_rad(speeds[1] * delta))
-	
+
 	## movement is controlled through the defined path
 	if get_parent() is WallPathFollow:
 		pass
@@ -50,7 +50,7 @@ func get_modified_speed() -> Array[float]:
 
 	var modified_speed := speed
 	var modified_rotate := rotate_speed
-	
+
 	if !Utils.check_bit_flag(movement_state_modifier, MovementModifier.ROTATE):
 		modified_rotate = 0
 
