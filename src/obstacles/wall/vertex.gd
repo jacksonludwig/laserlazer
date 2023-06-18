@@ -10,13 +10,14 @@ enum MovementModifier {
 	REVERSED = 2,
 	ROTATE = 4,
 	FAST = 8,
+	SLOW = 16
 }
 
 ## emitted when the wall state changes (e.g. the wall becomes ACTIVE)
 signal status_change(new_status: Enums.StatusType)
 
 @export_category("Movement Options")
-@export_flags("Frozen", "Reverse", "Rotate", "Fast") var movement_state_modifier: int = 0
+@export_flags("Frozen", "Reverse", "Rotate", "Fast", "Slow") var movement_state_modifier: int = 0
 @export var speed: float = 50
 @export var rotate_speed: float = 50
 @export var fast_speed_multiplier: float = 2
@@ -57,6 +58,10 @@ func get_modified_speed() -> Array[float]:
 	if Utils.check_bit_flag(movement_state_modifier, MovementModifier.FAST):
 		modified_speed = modified_speed * fast_speed_multiplier
 		modified_rotate = modified_rotate * fast_speed_multiplier
+		
+	if Utils.check_bit_flag(movement_state_modifier, MovementModifier.SLOW):
+		modified_speed = modified_speed / fast_speed_multiplier
+		modified_rotate = modified_rotate / fast_speed_multiplier
 
 	if Utils.check_bit_flag(movement_state_modifier, MovementModifier.REVERSED):
 		modified_speed = modified_speed * -1

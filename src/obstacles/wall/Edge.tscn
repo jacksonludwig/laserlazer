@@ -3,11 +3,12 @@
 [ext_resource type="Script" path="res://src/obstacles/wall/edge.gd" id="1_04l5i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xa6iq"]
-size = Vector2(34.75, 1.375)
+size = Vector2(34.375, 1.375)
 
 [node name="Edge" type="Area2D"]
 script = ExtResource("1_04l5i")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(17.1875, 0)
 shape = SubResource("RectangleShape2D_xa6iq")
 metadata/_edit_group_ = true
