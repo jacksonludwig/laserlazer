@@ -19,8 +19,8 @@ signal status_change(new_status: Enums.StatusType)
 @export_category("Status Options")
 @export var state: Enums.StatusType = Enums.StatusType.INACTIVE:
 	set(new_status):
-		status_change.emit(new_status)
 		state = new_status
+		status_change.emit(new_status)
 @export_category("")
 
 

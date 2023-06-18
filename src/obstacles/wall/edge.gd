@@ -3,7 +3,11 @@ extends Area2D
 ## Static edge that expects to be a child of a vertex
 
 ## this status should be inherited from the vertex and not be modified manually
-@export var status: Enums.StatusType = Enums.StatusType.INACTIVE
+@export var status: Enums.StatusType = Enums.StatusType.INACTIVE:
+	set(new_status):
+		if status == new_status: return
+		status = new_status
+		_on_active_status_changed(new_status)
 
 @onready var vertex: Vertex = get_parent()
 @onready var collision_shape: CollisionShape2D = get_child(0)
@@ -25,14 +29,10 @@ func _ready():
 	if status == Enums.StatusType.INACTIVE:
 		collision_shape.shape.size = Vector2.ZERO
 	
-	vertex.connect("status_change", _on_active_status_changed)
+	vertex.connect("status_change", func(new_status): status = new_status)
 
 
 func _on_active_status_changed(new_status: Enums.StatusType):
-	if status == new_status: return
-	
-	status = new_status
-	
 	match new_status:
 		Enums.StatusType.ACTIVE:
 			_on_become_active()
