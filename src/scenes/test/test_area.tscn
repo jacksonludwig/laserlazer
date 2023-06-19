@@ -4,11 +4,11 @@
 [ext_resource type="PackedScene" uid="uid://bkk1e2iakof6k" path="res://src/obstacles/wall/Edge.tscn" id="2_761dt"]
 [ext_resource type="PackedScene" uid="uid://dfwg5qd18h1q5" path="res://src/obstacles/wall/Laser.tscn" id="3_5yrtf"]
 
-[sub_resource type="SegmentShape2D" id="SegmentShape2D_x54x8"]
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_mn3at"]
 resource_local_to_scene = true
 b = Vector2(256, 0)
 
-[sub_resource type="SegmentShape2D" id="SegmentShape2D_vb8jd"]
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_o5pp3"]
 resource_local_to_scene = true
 b = Vector2(0, 256)
 
@@ -21,10 +21,10 @@ state = 1
 [node name="Edge" parent="Vertex" instance=ExtResource("2_761dt")]
 
 [node name="LaserShape" parent="Vertex/Edge" instance=ExtResource("3_5yrtf")]
-shape = SubResource("SegmentShape2D_x54x8")
+shape = SubResource("SegmentShape2D_mn3at")
 
 [node name="Edge2" parent="Vertex" instance=ExtResource("2_761dt")]
 metadata/_edit_group_ = true
 
 [node name="LaserShape" parent="Vertex/Edge2" instance=ExtResource("3_5yrtf")]
-shape = SubResource("SegmentShape2D_vb8jd")
+shape = SubResource("SegmentShape2D_o5pp3")

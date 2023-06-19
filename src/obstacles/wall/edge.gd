@@ -9,6 +9,9 @@ extends Area2D
 @onready var laser: Laser = $LaserShape
 @onready var laserLine: Line2D = laser.get_child(0)
 
+## tween used for animating state changes
+var _tween: Tween
+
 ## the collision and lazer will extend to these values when the edge is active
 var max_collision_size: Vector2
 
@@ -31,12 +34,12 @@ func _ready():
 	if status == Enums.StatusType.INACTIVE:
 		_update_laser_size(Vector2.ZERO)
 
-	vertex.connect("status_change", func(new_status):
-		status = new_status
-		_on_active_status_changed(new_status))
-	
+	vertex.connect("status_change", _on_active_status_changed)
+
 
 func _on_active_status_changed(new_status: Enums.StatusType):
+	status = new_status
+
 	match new_status:
 		Enums.StatusType.ACTIVE:
 			_on_become_active()
@@ -46,12 +49,16 @@ func _on_active_status_changed(new_status: Enums.StatusType):
 
 ## tween the collision and laser to maximum size
 func _on_become_active():
-	_get_tween().tween_method(_update_laser_size, laser.shape.b, max_collision_size, active_status_change_duration)
+	_get_tween().tween_method(
+		_update_laser_size, laser.shape.b, max_collision_size, active_status_change_duration
+	)
 
 
 ## tween the collision and laster to minimum size
 func _on_become_inactive():
-	_get_tween().tween_method(_update_laser_size, laser.shape.b, Vector2.ZERO, active_status_change_duration)
+	_get_tween().tween_method(
+		_update_laser_size, laser.shape.b, Vector2.ZERO, active_status_change_duration
+	)
 
 
 func _update_laser_size(size: Vector2):
@@ -59,7 +66,7 @@ func _update_laser_size(size: Vector2):
 	laserLine.points[1] = size
 
 
-var _tween: Tween
 func _get_tween():
-	if _tween: return _tween
+	if _tween:
+		return _tween
 	return create_tween()
