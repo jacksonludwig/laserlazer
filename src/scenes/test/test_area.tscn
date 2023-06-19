@@ -1,27 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://cd15muds850wn"]
+[gd_scene load_steps=4 format=3 uid="uid://cd15muds850wn"]
 
-[ext_resource type="PackedScene" uid="uid://dkf2jbs5ct6ds" path="res://src/obstacles/wall/WallPathFollow.tscn" id="1_qpr0m"]
-[ext_resource type="PackedScene" uid="uid://bhvmnn7jhc4p6" path="res://src/obstacles/wall/Vertex.tscn" id="2_phlnh"]
-[ext_resource type="PackedScene" uid="uid://bkk1e2iakof6k" path="res://src/obstacles/wall/Edge.tscn" id="3_nxgy5"]
-
-[sub_resource type="Curve2D" id="Curve2D_nbk84"]
-_data = {
-"points": PackedVector2Array(0, 0, 0, 0, 600, 275, 0, 0, 0, 0, 265, 275, 0, 0, 0, 0, 600, 275)
-}
-point_count = 3
+[ext_resource type="PackedScene" uid="uid://bhvmnn7jhc4p6" path="res://src/obstacles/wall/Vertex.tscn" id="1_dv2qi"]
+[ext_resource type="PackedScene" uid="uid://bkk1e2iakof6k" path="res://src/obstacles/wall/Edge.tscn" id="2_761dt"]
+[ext_resource type="PackedScene" uid="uid://dfwg5qd18h1q5" path="res://src/obstacles/wall/Laser.tscn" id="3_5yrtf"]
 
 [node name="test_area" type="Node2D"]
 
-[node name="Path2D" type="Path2D" parent="."]
-curve = SubResource("Curve2D_nbk84")
+[node name="Vertex" parent="." instance=ExtResource("1_dv2qi")]
+position = Vector2(408, 248)
+metadata/_edit_group_ = true
 
-[node name="WallPathFollow" parent="Path2D" instance=ExtResource("1_qpr0m")]
-position = Vector2(600, 275)
-rotation = 3.14159
-rotates = false
+[node name="Edge" parent="Vertex" instance=ExtResource("2_761dt")]
+metadata/_edit_group_ = true
 
-[node name="Vertex" parent="Path2D/WallPathFollow" instance=ExtResource("2_phlnh")]
-movement_state_modifier = 8
-
-[node name="Edge" parent="Path2D/WallPathFollow/Vertex" instance=ExtResource("3_nxgy5")]
-scale = Vector2(4, 4)
+[node name="LaserShape" parent="Vertex/Edge" instance=ExtResource("3_5yrtf")]

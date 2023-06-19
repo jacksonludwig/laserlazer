@@ -24,6 +24,11 @@ signal status_change(new_status: Enums.StatusType)
 @export_category("")
 
 
+func _ready():
+	## emit the initial state so all edges are in sync
+	status_change.emit(state)
+
+
 func _process(delta):
 	var speeds := get_modified_speed()
 	rotate(deg_to_rad(speeds[1] * delta))

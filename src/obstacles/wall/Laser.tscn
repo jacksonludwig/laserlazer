@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://dfwg5qd18h1q5"]
+
+[ext_resource type="Script" path="res://src/obstacles/wall/laser.gd" id="1_pvpey"]
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_v72bw"]
+b = Vector2(552, 0)
+
+[node name="LaserShape" type="CollisionShape2D"]
+shape = SubResource("SegmentShape2D_v72bw")
+script = ExtResource("1_pvpey")
+
+[node name="Line2D" type="Line2D" parent="."]
+points = PackedVector2Array(0, 0, 0, 0)
+default_color = Color(0, 1, 1, 1)

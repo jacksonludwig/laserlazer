@@ -1,0 +1,2 @@
+class_name Laser
+extends CollisionShape2D
