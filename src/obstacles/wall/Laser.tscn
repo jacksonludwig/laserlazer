@@ -3,7 +3,8 @@
 [ext_resource type="Script" path="res://src/obstacles/wall/laser.gd" id="1_pvpey"]
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_v72bw"]
-b = Vector2(552, 0)
+resource_local_to_scene = true
+b = Vector2(100, 0)
 
 [node name="LaserShape" type="CollisionShape2D"]
 shape = SubResource("SegmentShape2D_v72bw")
