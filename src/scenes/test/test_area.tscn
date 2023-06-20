@@ -1,30 +1,22 @@
-[gd_scene load_steps=6 format=3 uid="uid://cd15muds850wn"]
+[gd_scene load_steps=5 format=3 uid="uid://cd15muds850wn"]
 
 [ext_resource type="PackedScene" uid="uid://bhvmnn7jhc4p6" path="res://src/obstacles/wall/Vertex.tscn" id="1_dv2qi"]
-[ext_resource type="PackedScene" uid="uid://bkk1e2iakof6k" path="res://src/obstacles/wall/Edge.tscn" id="2_761dt"]
 [ext_resource type="PackedScene" uid="uid://dfwg5qd18h1q5" path="res://src/obstacles/wall/Laser.tscn" id="3_5yrtf"]
 
-[sub_resource type="SegmentShape2D" id="SegmentShape2D_mn3at"]
-resource_local_to_scene = true
-b = Vector2(256, 0)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xtj4w"]
 
-[sub_resource type="SegmentShape2D" id="SegmentShape2D_o5pp3"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mcc55"]
 resource_local_to_scene = true
-b = Vector2(0, 256)
 
 [node name="test_area" type="Node2D"]
 
 [node name="Vertex" parent="." instance=ExtResource("1_dv2qi")]
 position = Vector2(448, 320)
-state = 1
+movement_state_modifier = 4
 
-[node name="Edge" parent="Vertex" instance=ExtResource("2_761dt")]
+[node name="LaserRayCast" parent="Vertex" instance=ExtResource("3_5yrtf")]
+shape = SubResource("RectangleShape2D_xtj4w")
 
-[node name="LaserShape" parent="Vertex/Edge" instance=ExtResource("3_5yrtf")]
-shape = SubResource("SegmentShape2D_mn3at")
-
-[node name="Edge2" parent="Vertex" instance=ExtResource("2_761dt")]
-metadata/_edit_group_ = true
-
-[node name="LaserShape" parent="Vertex/Edge2" instance=ExtResource("3_5yrtf")]
-shape = SubResource("SegmentShape2D_o5pp3")
+[node name="LaserRayCast2" parent="Vertex" instance=ExtResource("3_5yrtf")]
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_mcc55")

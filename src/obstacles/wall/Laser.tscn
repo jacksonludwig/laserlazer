@@ -2,14 +2,17 @@
 
 [ext_resource type="Script" path="res://src/obstacles/wall/laser.gd" id="1_pvpey"]
 
-[sub_resource type="SegmentShape2D" id="SegmentShape2D_v72bw"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d8plg"]
 resource_local_to_scene = true
-b = Vector2(100, 0)
 
-[node name="LaserShape" type="CollisionShape2D"]
-shape = SubResource("SegmentShape2D_v72bw")
+[node name="LaserRayCast" type="ShapeCast2D"]
+shape = SubResource("RectangleShape2D_d8plg")
+target_position = Vector2(200, 0)
 script = ExtResource("1_pvpey")
+metadata/_edit_group_ = true
 
-[node name="Line2D" type="Line2D" parent="."]
-points = PackedVector2Array(0, 0, 0, 0)
+[node name="LaserVisual" type="Line2D" parent="."]
+scale = Vector2(1, 1)
+points = PackedVector2Array(0, 0, 192, 0)
+width = 3.0
 default_color = Color(0, 1, 1, 1)
