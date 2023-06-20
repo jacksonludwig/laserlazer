@@ -5,7 +5,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d8plg"]
 resource_local_to_scene = true
 
-[node name="LaserRayCast" type="ShapeCast2D"]
+[node name="Laser" type="ShapeCast2D"]
 shape = SubResource("RectangleShape2D_d8plg")
 target_position = Vector2(200, 0)
 script = ExtResource("1_pvpey")

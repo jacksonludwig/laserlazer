@@ -1,22 +1,33 @@
-[gd_scene load_steps=5 format=3 uid="uid://cd15muds850wn"]
+[gd_scene load_steps=6 format=3 uid="uid://cd15muds850wn"]
 
+[ext_resource type="PackedScene" uid="uid://dkf2jbs5ct6ds" path="res://src/obstacles/wall/WallPathFollow.tscn" id="1_33bmm"]
 [ext_resource type="PackedScene" uid="uid://bhvmnn7jhc4p6" path="res://src/obstacles/wall/Vertex.tscn" id="1_dv2qi"]
 [ext_resource type="PackedScene" uid="uid://dfwg5qd18h1q5" path="res://src/obstacles/wall/Laser.tscn" id="3_5yrtf"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_xtj4w"]
+[sub_resource type="Curve2D" id="Curve2D_er33e"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 328, 176, 0, 0, 0, 0, 416, 264, 0, 0, 0, 0, 584, 200, 0, 0, 0, 0, 720, 256, 0, 0, 0, 0, 840, 200, 0, 0, 0, 0, 584, 104, 0, 0, 0, 0, 328, 176)
+}
+point_count = 7
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_mcc55"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qxjvs"]
 resource_local_to_scene = true
 
 [node name="test_area" type="Node2D"]
 
-[node name="Vertex" parent="." instance=ExtResource("1_dv2qi")]
-position = Vector2(448, 320)
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_er33e")
+
+[node name="WallPathFollow" parent="Path2D" instance=ExtResource("1_33bmm")]
+position = Vector2(328, 176)
+rotation = 0.785398
+rotates = false
+
+[node name="Vertex" parent="Path2D/WallPathFollow" instance=ExtResource("1_dv2qi")]
+position = Vector2(3.05176e-05, 0)
+rotation = -0.785398
 movement_state_modifier = 4
 
-[node name="LaserRayCast" parent="Vertex" instance=ExtResource("3_5yrtf")]
-shape = SubResource("RectangleShape2D_xtj4w")
-
-[node name="LaserRayCast2" parent="Vertex" instance=ExtResource("3_5yrtf")]
-rotation = 1.5708
-shape = SubResource("RectangleShape2D_mcc55")
+[node name="Laser" parent="Path2D/WallPathFollow/Vertex" instance=ExtResource("3_5yrtf")]
+position = Vector2(-3.05176e-05, -1.52588e-05)
+shape = SubResource("RectangleShape2D_qxjvs")
