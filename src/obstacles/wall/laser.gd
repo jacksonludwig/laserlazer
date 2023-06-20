@@ -21,7 +21,7 @@ var _tween: Tween
 func _ready():
 	# set the laser to zero size if the default state is inactive
 	if status == Enums.StatusType.INACTIVE:
-		_update_laser_size(Vector2.ZERO)
+		_update_laser_ending_point(Vector2.ZERO)
 
 	vertex.connect("status_change", _on_active_status_changed)
 
@@ -39,18 +39,19 @@ func _on_active_status_changed(new_status: Enums.StatusType):
 ## tween the collision and laser to maximum size
 func _on_become_active():
 	_get_tween().tween_method(
-		_update_laser_size, self.target_position, end_point, active_status_change_duration
+		_update_laser_ending_point, self.target_position, end_point, active_status_change_duration
 	)
 
 
 ## tween the collision and laser to minimum size
 func _on_become_inactive():
 	_get_tween().tween_method(
-		_update_laser_size, self.target_position, Vector2.ZERO, active_status_change_duration
+		_update_laser_ending_point, self.target_position, Vector2.ZERO, active_status_change_duration
 	)
 
 
-func _update_laser_size(end_point: Vector2):
+## update the collision and visual line of the laser to end at the given point
+func _update_laser_ending_point(end_point: Vector2):
 	self.target_position = end_point
 	$LaserVisual.points[1] = end_point
 
