@@ -4,8 +4,6 @@ extends Line2D
 
 ## this status should be inherited from the vertex and not be modified manually
 @export var status: Enums.StatusType = Enums.StatusType.INACTIVE
-## number of seconds it takes to animate between statuses
-@export var active_status_change_duration: float = 3
 
 ## the collision and laser will extend to this point when active
 @onready var end_point := Vector2(self.points[1].x, self.points[1].y)
@@ -29,32 +27,28 @@ func _ready():
 	parent_vertex.connect("status_change", _on_active_status_changed)
 
 
-func _on_active_status_changed(new_status: Enums.StatusType):
+func _on_active_status_changed(new_status: Enums.StatusType, status_change_speed: float):
 	status = new_status
 
 	match new_status:
 		Enums.StatusType.ACTIVE:
-			_on_become_active()
+			_on_become_active(status_change_speed)
 		Enums.StatusType.INACTIVE:
-			_on_become_inactive()
+			_on_become_inactive(status_change_speed)
 
 
 ## tween the collision and laser to maximum size
-func _on_become_active():
+func _on_become_active(change_speed: float):
 	## if needed, re-active collision immediately
 	if collision_shape.disabled:
 		collision_shape.disabled = false
 
-	_get_tween().tween_method(
-		_update_laser_ending_point, self.points[1], end_point, active_status_change_duration
-	)
+	_get_tween().tween_method(_update_laser_ending_point, self.points[1], end_point, change_speed)
 
 
 ## tween the collision and laser to minimum size
-func _on_become_inactive():
-	_get_tween().tween_method(
-		_update_laser_ending_point, self.points[1], start_point, active_status_change_duration
-	)
+func _on_become_inactive(change_speed: float):
+	_get_tween().tween_method(_update_laser_ending_point, self.points[1], start_point, change_speed)
 
 
 ## update the collision and visual line of the laser to end at the given point

@@ -7,7 +7,7 @@ extends Node2D
 enum MovementModifier { NONE = 0, FROZEN = 1, REVERSED = 2, ROTATE = 4, FAST = 8, SLOW = 16 }
 
 ## emitted when the wall state changes (e.g. the wall becomes ACTIVE)
-signal status_change(new_status: Enums.StatusType)
+signal status_change(new_status: Enums.StatusType, status_change_speed: float)
 
 @export_category("Movement Options")
 @export_flags("Frozen", "Reverse", "Rotate", "Fast", "Slow") var movement_state_modifier: int = 0
@@ -17,16 +17,22 @@ signal status_change(new_status: Enums.StatusType)
 @export_category("")
 
 @export_category("Status Options")
-@export var state: Enums.StatusType = Enums.StatusType.INACTIVE:
+## how many seconds it takes for the lasers to grow/shrink to the new status
+@export var status_change_speed: float = 3
+@export var status: Enums.StatusType = Enums.StatusType.INACTIVE:
 	set(new_status):
-		state = new_status
-		status_change.emit(new_status)
+		status = new_status
+		status_change.emit(new_status, get_modified_speed()[2])
 @export_category("")
+
+@onready var parent_node: Node = get_parent()
+
+# TODO: add collision shape and visual for vertex, and attach lasers to edges
 
 
 func _ready():
 	## emit the initial state so all edges are in sync
-	status_change.emit(state)
+	status_change.emit(status)
 
 
 func _process(delta):
@@ -34,7 +40,7 @@ func _process(delta):
 	rotate(deg_to_rad(speeds[1] * delta))
 
 	## movement is controlled through the defined path
-	if get_parent() is WallPathFollow:
+	if parent_node is WallPathFollow:
 		pass
 
 	## movement controlled through code
@@ -42,13 +48,14 @@ func _process(delta):
 
 
 ## get the vertex's speed after modifiers have been applied
-## returns tuple of [movement speed, rotation speed]
+## returns tuple of [movement speed, rotation speed, status change speed]
 func get_modified_speed() -> Array[float]:
 	if Utils.check_bit_flag(movement_state_modifier, MovementModifier.FROZEN):
 		return [0, 0]
 
 	var modified_speed := speed
 	var modified_rotate := rotate_speed
+	var modified_change := status_change_speed
 
 	if !Utils.check_bit_flag(movement_state_modifier, MovementModifier.ROTATE):
 		modified_rotate = 0
@@ -56,13 +63,15 @@ func get_modified_speed() -> Array[float]:
 	if Utils.check_bit_flag(movement_state_modifier, MovementModifier.FAST):
 		modified_speed = modified_speed * fast_speed_multiplier
 		modified_rotate = modified_rotate * fast_speed_multiplier
+		modified_change = modified_change / fast_speed_multiplier
 
 	if Utils.check_bit_flag(movement_state_modifier, MovementModifier.SLOW):
 		modified_speed = modified_speed / fast_speed_multiplier
 		modified_rotate = modified_rotate / fast_speed_multiplier
+		modified_change = modified_change * fast_speed_multiplier
 
 	if Utils.check_bit_flag(movement_state_modifier, MovementModifier.REVERSED):
 		modified_speed = modified_speed * -1
 		modified_rotate = modified_rotate * -1
 
-	return [modified_speed, modified_rotate]
+	return [modified_speed, modified_rotate, modified_change]
