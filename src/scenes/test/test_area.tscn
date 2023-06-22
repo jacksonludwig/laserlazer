@@ -22,10 +22,15 @@ rotates = false
 
 [node name="Vertex" parent="Path2D/WallPathFollow" instance=ExtResource("1_dv2qi")]
 position = Vector2(3.05176e-05, 0)
-rotation = -0.785398
-movement_state_modifier = 4
-
-[node name="Laser" parent="Path2D/WallPathFollow/Vertex" instance=ExtResource("3_5yrtf")]
+state = 1
 
 [node name="Laser2" parent="Path2D/WallPathFollow/Vertex" instance=ExtResource("3_5yrtf")]
+position = Vector2(-3.05176e-05, -1.52588e-05)
 rotation = 1.5708
+points = PackedVector2Array(0, 0, 368, -0.00134277)
+width = 50.0
+
+[node name="Laser3" parent="Path2D/WallPathFollow/Vertex" instance=ExtResource("3_5yrtf")]
+position = Vector2(-3.05176e-05, -1.52588e-05)
+points = PackedVector2Array(0, 0, 368, -0.00134277)
+width = 50.0
