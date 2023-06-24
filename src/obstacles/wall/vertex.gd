@@ -32,7 +32,7 @@ signal status_change(new_status: Enums.StatusType, status_change_speed: float)
 
 func _ready():
 	## emit the initial state so all edges are in sync
-	status_change.emit(status)
+	status_change.emit(status, status_change_speed)
 
 
 func _process(delta):
