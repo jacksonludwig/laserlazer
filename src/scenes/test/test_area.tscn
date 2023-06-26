@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://cd15muds850wn"]
+[gd_scene load_steps=6 format=3 uid="uid://cd15muds850wn"]
 
 [ext_resource type="PackedScene" uid="uid://dkf2jbs5ct6ds" path="res://src/obstacles/wall/WallPathFollow.tscn" id="1_33bmm"]
 [ext_resource type="PackedScene" uid="uid://bhvmnn7jhc4p6" path="res://src/obstacles/wall/Vertex.tscn" id="1_dv2qi"]
 [ext_resource type="PackedScene" uid="uid://bcqojmjidwqva" path="res://src/obstacles/wall/Laser.tscn" id="3_5yrtf"]
+[ext_resource type="PackedScene" uid="uid://crlh5fibc204c" path="res://src/player/Player.tscn" id="4_i7cgm"]
 
 [sub_resource type="Curve2D" id="Curve2D_er33e"]
 _data = {
@@ -33,3 +34,5 @@ width = 50.0
 position = Vector2(-3.05176e-05, -1.52588e-05)
 points = PackedVector2Array(0, 0, 368, -0.00134277)
 width = 50.0
+
+[node name="Player" parent="." instance=ExtResource("4_i7cgm")]

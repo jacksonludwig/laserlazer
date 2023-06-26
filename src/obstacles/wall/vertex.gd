@@ -35,7 +35,7 @@ func _ready():
 	status_change.emit(status, status_change_speed)
 
 
-func _process(delta):
+func _physics_process(delta):
 	var speeds := get_modified_speed()
 	rotate(deg_to_rad(speeds[1] * delta))
 
