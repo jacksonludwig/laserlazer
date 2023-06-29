@@ -48,31 +48,56 @@ func _physics_process(delta):
 
 ## get the vertex's speed after modifiers have been applied
 func get_modified_speed() -> CurrentSpeedData:
+	var speed_data := CurrentSpeedData.new(speed, rotate_speed, status_change_speed)
+
+	_apply_rotate(speed_data)
+	_apply_fast(speed_data)
+	_apply_slow(speed_data)
+	_apply_reverse(speed_data)
+	_apply_frozen(speed_data)
+
+	return speed_data
+
+
+func _apply_frozen(data: CurrentSpeedData) -> CurrentSpeedData:
 	if Utils.check_bit_flag(movement_state_modifier, MovementModifier.FROZEN):
-		return CurrentSpeedData.new(0, 0, status_change_speed)
+		data.movement = 0
+		data.rotation = 0
 
-	var modified_speed := speed
-	var modified_rotate := rotate_speed
-	var modified_change := status_change_speed
+	return data
 
+
+func _apply_rotate(data: CurrentSpeedData) -> CurrentSpeedData:
 	if !Utils.check_bit_flag(movement_state_modifier, MovementModifier.ROTATE):
-		modified_rotate = 0
+		data.rotation = 0
 
+	return data
+
+
+func _apply_fast(data: CurrentSpeedData) -> CurrentSpeedData:
 	if Utils.check_bit_flag(movement_state_modifier, MovementModifier.FAST):
-		modified_speed = modified_speed * fast_speed_multiplier
-		modified_rotate = modified_rotate * fast_speed_multiplier
-		modified_change = modified_change / fast_speed_multiplier
+		data.movement = data.movement * fast_speed_multiplier
+		data.rotation = data.rotation * fast_speed_multiplier
+		data.status_change = data.status_change / fast_speed_multiplier
 
+	return data
+
+
+func _apply_slow(data: CurrentSpeedData) -> CurrentSpeedData:
 	if Utils.check_bit_flag(movement_state_modifier, MovementModifier.SLOW):
-		modified_speed = modified_speed / fast_speed_multiplier
-		modified_rotate = modified_rotate / fast_speed_multiplier
-		modified_change = modified_change * fast_speed_multiplier
+		data.movement = data.movement / fast_speed_multiplier
+		data.rotation = data.rotation / fast_speed_multiplier
+		data.status_change = data.status_change * fast_speed_multiplier
 
+	return data
+
+
+func _apply_reverse(data: CurrentSpeedData) -> CurrentSpeedData:
 	if Utils.check_bit_flag(movement_state_modifier, MovementModifier.REVERSED):
-		modified_speed = modified_speed * -1
-		modified_rotate = modified_rotate * -1
+		data.movement = data.movement * -1
+		data.rotation = data.rotation * -1
 
-	return CurrentSpeedData.new(modified_speed, modified_rotate, modified_change)
+	return data
 
 
 ## class for holding speed data about a vertex, e.g. movement speed
