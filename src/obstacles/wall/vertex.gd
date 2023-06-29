@@ -22,7 +22,7 @@ signal status_change(new_status: Enums.StatusType, status_change_speed: float)
 @export var status: Enums.StatusType = Enums.StatusType.INACTIVE:
 	set(new_status):
 		status = new_status
-		status_change.emit(new_status, get_modified_speed()[2])
+		status_change.emit(new_status, get_modified_speed().status_change)
 @export_category("")
 
 @onready var parent_node: Node = get_parent()
@@ -36,8 +36,7 @@ func _ready():
 
 
 func _physics_process(delta):
-	var speeds := get_modified_speed()
-	rotate(deg_to_rad(speeds[1] * delta))
+	rotate(deg_to_rad(get_modified_speed().rotation * delta))
 
 	## movement is controlled through the defined path
 	if parent_node is WallPathFollow:
@@ -48,10 +47,9 @@ func _physics_process(delta):
 
 
 ## get the vertex's speed after modifiers have been applied
-## returns tuple of [movement speed, rotation speed, status change speed]
-func get_modified_speed() -> Array[float]:
+func get_modified_speed() -> CurrentSpeedData:
 	if Utils.check_bit_flag(movement_state_modifier, MovementModifier.FROZEN):
-		return [0, 0]
+		return CurrentSpeedData.new(0, 0, status_change_speed)
 
 	var modified_speed := speed
 	var modified_rotate := rotate_speed
@@ -74,4 +72,16 @@ func get_modified_speed() -> Array[float]:
 		modified_speed = modified_speed * -1
 		modified_rotate = modified_rotate * -1
 
-	return [modified_speed, modified_rotate, modified_change]
+	return CurrentSpeedData.new(modified_speed, modified_rotate, modified_change)
+
+
+## class for holding speed data about a vertex, e.g. movement speed
+class CurrentSpeedData:
+	var movement: float
+	var rotation: float
+	var status_change: float
+
+	func _init(movement, rotation, status_change):
+		self.movement = movement
+		self.rotation = rotation
+		self.status_change = status_change

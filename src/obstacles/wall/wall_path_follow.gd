@@ -7,5 +7,4 @@ extends PathFollow2D
 
 func _physics_process(delta):
 	assert(vertex is Vertex, "Wall path expected child to be a vertex")
-	var speed := vertex.get_modified_speed()[0]
-	set_progress(get_progress() + speed * delta)
+	set_progress(get_progress() + vertex.get_modified_speed().movement * delta)
