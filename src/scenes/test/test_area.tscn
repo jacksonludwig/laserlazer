@@ -1,38 +1,53 @@
-[gd_scene load_steps=6 format=3 uid="uid://cd15muds850wn"]
+[gd_scene load_steps=7 format=3 uid="uid://cd15muds850wn"]
 
 [ext_resource type="PackedScene" uid="uid://dkf2jbs5ct6ds" path="res://src/obstacles/wall/WallPathFollow.tscn" id="1_33bmm"]
 [ext_resource type="PackedScene" uid="uid://bhvmnn7jhc4p6" path="res://src/obstacles/wall/Vertex.tscn" id="1_dv2qi"]
 [ext_resource type="PackedScene" uid="uid://bcqojmjidwqva" path="res://src/obstacles/wall/Laser.tscn" id="3_5yrtf"]
 [ext_resource type="PackedScene" uid="uid://crlh5fibc204c" path="res://src/player/Player.tscn" id="4_i7cgm"]
 
-[sub_resource type="Curve2D" id="Curve2D_er33e"]
+[sub_resource type="Curve2D" id="Curve2D_7w4w6"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 328, 176, 0, 0, 0, 0, 416, 264, 0, 0, 0, 0, 584, 200, 0, 0, 0, 0, 720, 256, 0, 0, 0, 0, 840, 200, 0, 0, 0, 0, 584, 104, 0, 0, 0, 0, 328, 176)
+"points": PackedVector2Array(0, 0, 0, 0, 0, 128, 0, 0, 0, 0, 1824, 128, 0, 0, 0, 0, 0, 128)
 }
-point_count = 7
+point_count = 3
+
+[sub_resource type="Curve2D" id="Curve2D_27ghk"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 1152, 256, 0, 0, 0, 0, -672, 256, 0, 0, 0, 0, 1152, 256)
+}
+point_count = 3
 
 [node name="test_area" type="Node2D"]
 
 [node name="Path2D" type="Path2D" parent="."]
-curve = SubResource("Curve2D_er33e")
+position = Vector2(0, 56)
+curve = SubResource("Curve2D_7w4w6")
 
 [node name="WallPathFollow" parent="Path2D" instance=ExtResource("1_33bmm")]
-position = Vector2(328, 176)
-rotation = 0.785398
-rotates = false
+position = Vector2(0, 128)
 
 [node name="Vertex" parent="Path2D/WallPathFollow" instance=ExtResource("1_dv2qi")]
-position = Vector2(3.05176e-05, 0)
+movement_state_modifier = 8
+speed = 150.0
+status_change_speed = 1.0
+status = 1
 
-[node name="Laser2" parent="Path2D/WallPathFollow/Vertex" instance=ExtResource("3_5yrtf")]
-position = Vector2(-3.05176e-05, -1.52588e-05)
-rotation = 1.5708
-points = PackedVector2Array(0, 0, 368, -0.00134277)
-width = 50.0
-
-[node name="Laser3" parent="Path2D/WallPathFollow/Vertex" instance=ExtResource("3_5yrtf")]
-position = Vector2(-3.05176e-05, -1.52588e-05)
-points = PackedVector2Array(0, 0, 368, -0.00134277)
-width = 50.0
+[node name="Laser" parent="Path2D/WallPathFollow/Vertex" instance=ExtResource("3_5yrtf")]
 
 [node name="Player" parent="." instance=ExtResource("4_i7cgm")]
+position = Vector2(960, 512)
+
+[node name="Path2D2" type="Path2D" parent="."]
+position = Vector2(672, 640)
+curve = SubResource("Curve2D_27ghk")
+
+[node name="WallPathFollow" parent="Path2D2" instance=ExtResource("1_33bmm")]
+position = Vector2(1152, 256)
+
+[node name="Vertex" parent="Path2D2/WallPathFollow" instance=ExtResource("1_dv2qi")]
+movement_state_modifier = 8
+speed = 150.0
+status_change_speed = 1.0
+status = 1
+
+[node name="Laser" parent="Path2D2/WallPathFollow/Vertex" instance=ExtResource("3_5yrtf")]
