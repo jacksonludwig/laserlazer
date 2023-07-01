@@ -3,6 +3,8 @@ extends CharacterBody2D
 
 @export var speed: float = 300
 
+@onready var screen_size = get_viewport_rect().size
+
 
 func _physics_process(delta):
 	# call `Input.get_action_strength()` to support analog movement.
@@ -20,3 +22,5 @@ func _physics_process(delta):
 
 	velocity = direction * speed
 	move_and_collide(velocity * delta)
+	position.x = clamp(position.x, 0, screen_size.x)
+	position.y = clamp(position.y, 0, screen_size.y)
