@@ -26,11 +26,17 @@ signal status_change(new_status: Enums.StatusType, status_change_speed: float)
 @export_category("")
 
 @onready var parent_node: Node = get_parent()
+@onready var collision_shape: CollisionShape2D = $Area2D/CollisionShape2D
 
-# TODO: add collision shape and visual for vertex, and attach lasers to edges
+## length and size to set the vertex's collision to
+@export var collision_shape_size = Vector2(8, 8)
+
+# TODO: add visual for vertex
 
 
 func _ready():
+	self.collision_shape.shape.size = collision_shape_size
+
 	## emit the initial state so all edges are in sync
 	status_change.emit(status, status_change_speed)
 
@@ -106,7 +112,7 @@ class CurrentSpeedData:
 	var rotation: float
 	var status_change: float
 
-	func _init(movement, rotation, status_change):
-		self.movement = movement
-		self.rotation = rotation
-		self.status_change = status_change
+	func _init(_movement, _rotation, _status_change):
+		self.movement = _movement
+		self.rotation = _rotation
+		self.status_change = _status_change

@@ -7,7 +7,8 @@ resource_local_to_scene = true
 size = Vector2(0, 0)
 
 [node name="Laser" type="Line2D"]
-points = PackedVector2Array(0, 0, 100, 0)
+points = PackedVector2Array(0, 0, 50, 0)
+width = 5.0
 default_color = Color(0, 1, 1, 1)
 script = ExtResource("1_pvpey")
 

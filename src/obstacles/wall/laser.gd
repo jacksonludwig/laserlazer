@@ -20,6 +20,9 @@ func _ready():
 	# ignore any extra points added in editor
 	self.points = self.points.slice(0, 2)
 
+	# set the laser's width to be relative to the vertex's size
+	self.width = parent_vertex.collision_shape_size.x - 2
+
 	# set the laser to zero size if the default state is inactive
 	if status == Enums.StatusType.INACTIVE:
 		_update_laser_ending_point(start_point)
